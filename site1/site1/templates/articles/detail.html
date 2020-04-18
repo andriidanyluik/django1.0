@@ -11,4 +11,32 @@
 
 <em>{{article.pub_date}}</em>
 
+<hr>
+
+
+{% if latest_comment_list %}
+	{% for c in latest_comment_list %}
+		<p>
+			<strong>{{c.author_name}}</strong>
+			<p>{{c.comment_text}}</p>
+		</p>
+		
+	{% endfor %}
+{% else %}
+Коментарів немає!
+{% endif %}
+
+
+<hr>
+<form action="{% url 'articles:leave_comment' article.id %}" method="POST">
+
+	{% csrf_token %}
+	
+	<input type="text" required placeholder ="Ваше ім'я" name="name"><br>
+	<textarea name="text" required="" placeholder="Текст коментаря" cols="30" rows="10"></textarea><br>
+
+	<button type="submit">Залишити коментар</button>
+
+</form>
+
 {% endblock %}
