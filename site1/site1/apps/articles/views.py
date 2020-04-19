@@ -26,3 +26,7 @@ def leave_comment(request, article_id):
 	a.comment_set.create(author_name = request.POST['name'], comment_text = request.POST['text'])
 
 	return HttpResponseRedirect( reverse('articles:detail', args = (a.id,)) )
+
+def post_list(request):
+    posts = Article.objects.filter(published_date=timezone.now()).order_by('published_date')
+    return render(request, 'articles/list.html', {'posts': posts})
